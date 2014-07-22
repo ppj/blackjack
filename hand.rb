@@ -9,7 +9,8 @@ class Hand
   end
 
   def new_card(card)
-    @cards << card if card.is_a Card
+    @cards << card if card.is_a? Card
+    self.total
   end
 
   def total
@@ -30,11 +31,9 @@ class Hand
       end
     end
     @total = total
-    return total
   end
 
   def busted?
-    @total = self.total
     @total > 21
   end
 
@@ -68,7 +67,7 @@ class Hand
     self.cards.each { print " \u231E-----\u231F " }
 
     unless hide_last
-      puts "  Total: #{self.total}"
+      puts "  Total: #{@total}"
     end
 
     puts
