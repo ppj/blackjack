@@ -14,27 +14,36 @@ class Hand
   end
 
   def total
-    total = 0
-    aces = 0
+    hand_total     = 0
+    ace_count = 0
     self.cards.each do |card|
-      if card.value == 'A'
-        total += 11
-        aces += 1
+      if card.value == 'a'
+        hand_total += 11
+        ace_count += 1
       else
-        total += card.value
+        hand_total += card.value
       end
     end
 
-    aces.times do
-      if total > 21
-        total -= 10
+    ace_count.times do
+      if hand_total > 21
+        hand_total -= 10
       end
     end
-    @total = total
+    @total = hand_total
   end
 
   def busted?
-    @total > 21
+    self.total > 21
+  end
+
+  def blackjack?
+    total == 21
+  end
+
+  def clear
+    @cards = []
+    @total = 0
   end
 
   def display(hide_last = false)

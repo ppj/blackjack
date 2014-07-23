@@ -3,11 +3,15 @@ require './deck'
 
 class Dealer
 
-  def initialize(name, deck)
-    @name = name
-    @hand = Hand.new
+  @@dealer_set = false
+  attr_reader :hand
 
+  def initialize(deck)
+    raise "Cannot have more than one dealer" if @@dealer_set
+    # @name = name
+    @hand = Hand.new
     @deck = deck
+    @@dealer_set = true
   end
 
   def shuffle
@@ -20,5 +24,22 @@ class Dealer
     @deck.pop
   end
 
+  def stay?
+    self.hand.total > 17
+  end
+
+  def hit
+    unless self.stay?
+      self.hand.new_card(self.deal)
+    end
+  end
+
+  def busted?
+    self.hand.busted?
+  end
+
+  def hit_blackjack?
+    self.hand.blackjack?
+  end
 
 end

@@ -8,8 +8,8 @@ class Card
   end
 
   def value
-    if self.denomination == 'A'
-      'A'
+    if self.denomination == 'a'
+      'a'
     elsif self.denomination.to_i == 0
       10
     else
