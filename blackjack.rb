@@ -27,19 +27,22 @@ class BlackJack
   def play
 
     default_bet = '20'
-    while @player.chips > 0
 
+    while @player.chips > 0
       new_game = prompt("Ready to start a round? [y/<anything else>]", 'y').downcase[0]
       unless new_game == 'y'
         break
       end
-      system "cls"
+      system 'cls'
 
       puts "You have #{@player.chips} chips"
 
+      bet = 20
       while true
         bet = prompt("Place your bet #{@player.name}", default_bet).to_i
-        if bet <= @player.chips
+        if bet < 1
+          puts "Come on #{@player.name}, you have to place a valid bet!"
+        elsif bet <= @player.chips
           default_bet = "#{bet}"
           break
         else
@@ -54,14 +57,14 @@ class BlackJack
         @dealer.hit
       end
 
-      display
+      display_hands
 
       # if player gets a blackjack after the initial dealing
       if @player.hit_blackjack?
         if @dealer.hit_blackjack?
-          display "Game pushes"
+          display_hands "Game pushes"
         else
-          display "You hit a BlackJack! You win #{@player.name}!!"
+          display_hands "You hit a BlackJack! You win #{@player.name}!!"
           @player.chips += get_bet_result(bet)
         end
       else
@@ -74,17 +77,17 @@ class BlackJack
             break
           end
           @player.hit(@dealer.deal)
-          display
+          display_hands
           if @player.busted?
-            display "You have busted. I win!"
+            display_hands "You have busted. I win!"
             @player.chips += get_bet_result(bet, 'lost')
             game_over = true
             break
           elsif @player.hit_blackjack?
             if @dealer.hit_blackjack? == 21
-              display "Game pushes"
+              display_hands "Game pushes"
             else
-              display "You hit a BlackJack! You win #{@player.name}!!"
+              display_hands "You hit a BlackJack! You win #{@player.name}!!"
               @player.chips += get_bet_result(bet)
             end
             game_over = true
@@ -96,14 +99,14 @@ class BlackJack
         unless game_over
           while @dealer.hand.total < 17
             @dealer.hit
-            display
+            display_hands
             sleep 0.5
             if @dealer.busted?
-              display "I have busted. You win #{@player.name}!"
+              display_hands "I have busted. You win #{@player.name}!"
               @player.chips += get_bet_result(bet)
               game_over = true
             elsif @dealer.hit_blackjack?
-              display "I hit a BlackJack!! I win!!!"
+              display_hands "I hit a BlackJack!! I win!!!"
               @player.chips += get_bet_result(bet, 'lost')
               game_over = true
             end
@@ -113,12 +116,12 @@ class BlackJack
         # if no winner / loser yet
         unless game_over
           if @player.hand.total > @dealer.hand.total
-            display "I lose. You win #{@player.name}!"
+            display_hands "I lose. You win #{@player.name}!"
             @player.chips += get_bet_result(bet)
           elsif @player.hand.total == @dealer.hand.total
-            display "Game pushed! Nobody loses!!"
+            display_hands "Game pushed! Nobody loses!!"
           else
-            display "I win! You lose #{@player.name}!!"
+            display_hands "I win! You lose #{@player.name}!!"
             @player.chips += get_bet_result(bet, 'lost')
           end
         end
@@ -155,7 +158,7 @@ class BlackJack
   end
 
 
-  def display(game_over_msg = "" )
+  def display_hands(game_over_msg = "" )
     system "cls"
     @dealer.hand.display(game_over_msg.empty?)
     @player.hand.display

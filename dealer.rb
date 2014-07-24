@@ -7,7 +7,7 @@ class Dealer
   attr_reader :hand
 
   def initialize(deck)
-    raise "Cannot have more than one dealer" if @@dealer_set
+    raise 'Cannot have more than one dealer' if @@dealer_set
     # @name = name
     @hand = Hand.new
     @deck = deck
@@ -15,7 +15,7 @@ class Dealer
   end
 
   def shuffle
-    puts "Shuffling the cards..."
+    puts 'Shuffling the cards...'
     sleep 0.75
     @deck.shuffle!
   end
@@ -24,12 +24,8 @@ class Dealer
     @deck.pop
   end
 
-  def stay?
-    self.hand.total > 17
-  end
-
   def hit
-    unless self.stay?
+    if hit?
       self.hand.new_card(self.deal)
     end
   end
@@ -40,6 +36,13 @@ class Dealer
 
   def hit_blackjack?
     self.hand.blackjack?
+  end
+
+
+  private
+
+  def hit?
+    self.hand.total <= 17
   end
 
 end
