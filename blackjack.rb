@@ -172,15 +172,15 @@ class BlackJack
   end
 
 
-  def display_hands(game_over_msg = "" )
+  def display_hands(round_over_msg = "" )
     system "cls"
     puts "Dealer's Hand"
-    @dealer.hand.display(game_over_msg.empty?)
+    @dealer.hand.display(round_over_msg.empty?)
     puts
     puts "#{player.name}'s Hand"
     @player.hand.display
-    unless game_over_msg.empty?
-      puts game_over_msg
+    unless round_over_msg.empty?
+      puts round_over_msg
       puts "### ROUND OVER ###\n\n"
     end
   end
