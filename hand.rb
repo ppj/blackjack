@@ -26,7 +26,7 @@ class Hand
     end
 
     ace_count.times do
-      if hand_total > 21
+      if hand_total > BlackJack::BLACKJACK_SCORE
         hand_total -= 10
       end
     end
@@ -34,11 +34,11 @@ class Hand
   end
 
   def busted?
-    self.total > 21
+    self.total > BlackJack::BLACKJACK_SCORE
   end
 
   def blackjack?
-    total == 21
+    total == BlackJack::BLACKJACK_SCORE
   end
 
   def clear

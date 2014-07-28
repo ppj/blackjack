@@ -42,7 +42,7 @@ class Dealer
   private
 
   def hit?
-    self.hand.total <= 17
+    self.hand.total <= BlackJack::DEALER_HIT_MINIMUM
   end
 
 end

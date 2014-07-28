@@ -6,9 +6,9 @@ class Player
   attr_reader :name, :hand
 
   def initialize(name, chips)
-    @name = name
+    @name  = name
     @chips = chips
-    @hand = Hand.new
+    @hand  = Hand.new
   end
 
   def hit(card)

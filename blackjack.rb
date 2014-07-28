@@ -5,6 +5,8 @@ require './prompt'
 
 class BlackJack
   attr_accessor :player, :dealer, :deck
+  BLACKJACK_SCORE    = 21
+  DEALER_HIT_MINIMUM = 17
 
   include Prompt
 
@@ -101,7 +103,7 @@ class BlackJack
         @player.chips += get_bet_result('lost')
         return true
       elsif @player.hit_blackjack?
-        if @dealer.hit_blackjack? == 21
+        if @dealer.hit_blackjack? == BLACKJACK_SCORE
           display_hands "Game pushes"
         else
           display_hands "You hit a BlackJack! You win #{@player.name}!!"
@@ -115,7 +117,7 @@ class BlackJack
 
 
   def dealer_turn
-    while @dealer.hand.total < 17
+    while @dealer.hand.total < DEALER_HIT_MINIMUM
       @dealer.hit
       display_hands
       sleep 0.5
