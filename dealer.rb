@@ -1,5 +1,5 @@
-require './player'
-require './deck'
+require_relative './player'
+require_relative './deck'
 
 class Dealer
 

@@ -1,6 +1,6 @@
-require './player'
-require './dealer'
-require './prompt'
+require_relative './player'
+require_relative './dealer'
+require_relative './prompt'
 
 
 class BlackJack
@@ -12,6 +12,7 @@ class BlackJack
 
   def initialize
     system 'cls'
+    system 'clear'
     player_name   = prompt("Welcome to the BlackJack table, your name?", 'Alex')
     chips         = prompt("How many chips would you like to buy #{player_name}", '100').to_i
 
@@ -31,6 +32,7 @@ class BlackJack
   def play
     while play_new_round?
       system 'cls'
+      system 'clear'
       puts "You have #{@player.chips} chips"
       place_bet
       game_over = initial_dealing
@@ -175,7 +177,8 @@ class BlackJack
 
 
   def display_hands(round_over_msg = "" )
-    system "cls"
+    system 'cls'
+    system 'clear'
     puts "Dealer's Hand"
     @dealer.hand.display(round_over_msg.empty?)
     puts

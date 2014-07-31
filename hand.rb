@@ -1,4 +1,4 @@
-require './card'
+require_relative './card'
 
 class Hand
   attr_reader :cards
